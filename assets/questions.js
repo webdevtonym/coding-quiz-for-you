@@ -1,4 +1,4 @@
-var questionsArr= [
+ var questionsArr = [
 
     {
         question: "What is the best variable to use so that it can be used everywhere in the code?",
