@@ -35,9 +35,6 @@ var startButton = document.getElementById("start");
 var startScreen = document.getElementById("start-screen");
 var showElement = document.getElementById("questions");
 
-// var questionEl = document.getElementById()
-
-
 var currentQuestion = 0;
 var secondsLeft = 30;
 var timerInterval;
@@ -95,17 +92,23 @@ function updateCounter() {
 }
 
 function endQuiz() {
-    var initials = prompt("Please enter your initials:");
+    var initials = prompt("Please enter your initials:");//change this to the second page
     if(initials != null) {
-
+        //do something here
     }
 }
 
 function displayQuestion() {
 
-    startScreen.style.display = "none";
-    showElement.style.display = "block";
-    updateCounter();
+    startScreen.style.display = "block";
+    showElement.style.display = "none";
+    startButton.addEventListener("click", function() {
+        startScreen.style.display = "none";
+        showElement.style.display = "block";
+        updateCounter();
+        showElement();
+
+    });
   //assigns a new variable to the h2 id of the questions div
   var questionTitle = document.getElementById("question-title");
 
@@ -113,49 +116,23 @@ function displayQuestion() {
   var choice = document.getElementById("choices");
 
   //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
-  questionTitle.textContent = questionsArr[0].question;
+  questionTitle.textContent = questionsArr[currentQuestion].question;
+
+  choice.textContent = "";
 
 
   // for loop to iterate through the array
-  for (var i = 0; i < questionsArr[0].answers.length; i++) {
+  for (var i = 0; i < questionsArr[currentQuestion].answers.length; i++) {
 
     //create buttons
     var button = document.createElement('button');
 
     //add questions in array to the button and make it show on the page using textContent.
-    button.textContent = questionsArr[0].answers[i];
+    button.textContent = questionsArr[currentQuestion].answers[i];
 
     //add event listener to do something once the buttons are clicked
-    button.addEventListener("click", function(){
+    button.addEventListener("click", checkAnswer);
 
-        var indexFollower = 0;
-
-        if(this.textContent === questionsArr[0].correctAnswer) { //if the text content of questions arr at index 0 correct answer is true(matches what was clicked)
-            alert("Correct!");
-            //display message on the page saying: Correct!
-            indexFollower++;
-            var question = questionsArr[indexFollower].question;
-            var answers = questionsArr[indexFollower].answers;
-
-            document.getElementById("question").textContent = "";
-            document.getElementById("choices").textContent = "";
-            
-            // move to the next question and answers
-
-            //It should be displaying the first array to start with and together with the first answers
-            //then after the correct answer is chosen moving to the next index of the array and repeating that.
-
-            questionTitle.textContent = questionsArr[0].question;
-            button.textContent = questionsArr[0].answers;
-
-
-
-        } else {
-            alert("Wrong!");
-            secondsLeft = secondsLeft - 10;
-        }
-
-    });
     choice.appendChild(button);
 
     
@@ -163,21 +140,21 @@ function displayQuestion() {
 
 }
 
-  //iterate through array
-//   for(var i = 0; i < questionsArr.length; i++) {
-//     //create button
-//     var button = document.createElement("button");
-    
-//     //
-//     button.textContent = "button" + (i + 1);
-//     button.addEventListener("click", function(){
-//         alert("button works");
-//     });
-//     questionsArr[i].appendChild(button);
+function checkAnswer(event){
+    var selectedAnswer = event.target.textContent;
+    if(selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
+        score++;
+    } else {
+        secondsLeft -= 10;
+    }
+    currentQuestion++;
+    if(currentQuestion < questionsArr.length) {
+        displayQuestion();
+    } else {
+        endQuiz();
+    }
 
-//   }
-// }
-
+}
 /////////////BUTTONS////////////////
 //need to create 4 buttons
 //the buttons need to link to each individual answer
