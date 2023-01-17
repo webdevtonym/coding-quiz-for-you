@@ -37,19 +37,11 @@ var showElement = document.getElementById("questions");
 
 // var questionEl = document.getElementById()
 
-var secondsLeft = 30;
 
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
+var currentQuestion = 0;
+var secondsLeft = 30;
+var timerInterval;
+var score = 0;
 
 //my logic
 
@@ -89,27 +81,38 @@ var secondsLeft = 30;
 
 //Update counter on page
 function updateCounter() {
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         secondsLeft--;
         countEl.textContent = secondsLeft;
 
         if(secondsLeft === 0) {
             clearInterval(timerInterval);
+            endQuiz();
         }
     } ,1000)
   //seconds left needs to count down from 30
  
 }
 
+function endQuiz() {
+    var initials = prompt("Please enter your initials:");
+    if(initials != null) {
+
+    }
+}
+
 function displayQuestion() {
+
+    startScreen.style.display = "none";
+    showElement.style.display = "block";
+    updateCounter();
   //assigns a new variable to the h2 id of the questions div
   var questionTitle = document.getElementById("question-title");
 
   //assigns a new variable to the id choices child div of parent div questions
   var choice = document.getElementById("choices");
 
-  //takes the first variable created (so that we can target the html text content and manipulate it)
-  //then makes it equal to 1st element of the questions array and points to the question item in the object.
+  //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
   questionTitle.textContent = questionsArr[0].question;
 
 
@@ -124,10 +127,26 @@ function displayQuestion() {
 
     //add event listener to do something once the buttons are clicked
     button.addEventListener("click", function(){
-        if(this.textContent === questionsArr[0].correctAnswer) {
+
+        var indexFollower = 0;
+
+        if(this.textContent === questionsArr[0].correctAnswer) { //if the text content of questions arr at index 0 correct answer is true(matches what was clicked)
             alert("Correct!");
-            questionTitle.textContent = questionsArr[1].question;
-            button.textContent = questionsArr[1].answers[i];
+            //display message on the page saying: Correct!
+            indexFollower++;
+            var question = questionsArr[indexFollower].question;
+            var answers = questionsArr[indexFollower].answers;
+
+            document.getElementById("question").textContent = "";
+            document.getElementById("choices").textContent = "";
+            
+            // move to the next question and answers
+
+            //It should be displaying the first array to start with and together with the first answers
+            //then after the correct answer is chosen moving to the next index of the array and repeating that.
+
+            questionTitle.textContent = questionsArr[0].question;
+            button.textContent = questionsArr[0].answers;
 
 
 
@@ -172,20 +191,6 @@ function displayQuestion() {
 // A start button that when clicked a timer starts and the first question appears.
 var startButton = document.getElementById("start");
 
-
-// function startQuiz() {
-//   var secondsLeft = 30;
-//   startButton.addEventListener("click", function () {
-//     updateCounter();
-//     var timerInterval = setInterval(function () {
-//       secondsLeft--;
-//       countEl.textContent = secondsLeft;
-//       if (secondsLeft === 0) {
-//         clearInterval(timerInterval);
-//       }
-//     });
-//   });
-
 function startQuiz() {
   console.log("startQuiz function is running");
   startButton.addEventListener("click", function () {
@@ -200,13 +205,7 @@ function startQuiz() {
   displayQuestion();
 }
 
-//question div
-
 startQuiz();
-
-// if (clicked === null) {
-//   time--;
-//
 
 // Questions contain buttons for each answer.
 // When answer is clicked, the next question appears
