@@ -1,45 +1,3 @@
-var questionsArr = [
-  {
-    question:
-      "What is the best variable to use so that it can be used everywhere in the code?",
-    answers: ["const", "var", "let", "run"],
-    correctAnswer: "var",
-  },
-
-  {
-    question: "Which one of the following is a Javascript loop?",
-    answers: ["console.log", "var", "for", "loop"],
-    correctAnswer: "for",
-  },
-
-  {
-    question: "Which method is used to add a new item to an array?",
-    answers: ["push()", "pop()", "snap()", "crackle()"],
-    correctAnswer: "push()",
-  },
-
-  {
-    question: "What is the syntax for a Javascript function?",
-    answers: [
-      "var function functionName() {}",
-      "function functionName() {}",
-      "functionName function() {}",
-      "{function, functionName()}",
-    ],
-    correctAnswer: "function functionName() {}",
-  },
-];
-
-var countEl = document.querySelector("#time");
-var startButton = document.getElementById("start");
-var startScreen = document.getElementById("start-screen");
-var showElement = document.getElementById("questions");
-
-var currentQuestion = 0;
-var secondsLeft = 30;
-var timerInterval;
-var score = 0;
-
 //my logic
 
 //1. The user clicks the button *
@@ -74,59 +32,89 @@ var score = 0;
 
 //4. When they click the clear highscores it should clear all the current data.
 
-// Create a code quiz tha at contains the following requirements:
 
-//Update counter on page
-function updateCounter() {
-    timerInterval = setInterval(function() {
-        secondsLeft--;
-        countEl.textContent = secondsLeft;
 
-        if(secondsLeft === 0) {
-            clearInterval(timerInterval);
-            endQuiz();
-        }
-    } ,1000)
-  //seconds left needs to count down from 30
- 
-}
+var questionsArr = [
+  {
+    question:
+      "What is the best variable to use so that it can be used everywhere in the code?",
+    answers: ["const", "var", "let", "run"],
+    correctAnswer: "var",
+  },
 
-function endQuiz() {
-    var initials = prompt("Please enter your initials:");//change this to the second page
-    if(initials != null) {
-        //do something here
-    }
-}
+  {
+    question: "Which one of the following is a Javascript loop?",
+    answers: ["console.log", "var", "for", "loop"],
+    correctAnswer: "for",
+  },
 
-function displayQuestion() {
+  {
+    question: "Which method is used to add a new item to an array?",
+    answers: ["push()", "pop()", "snap()", "crackle()"],
+    correctAnswer: "push()",
+  },
 
-    startScreen.style.display = "block"; //show startscreen
-    showElement.style.display = "none"; // hide startscreen
-    startButton.addEventListener("click", function() { // when start button clicked run function
-        console.log("button works");
-        startScreen.style.display = "none";
-        showElement.style.display = "block";
-        updateCounter();
-        showElement();
+  {
+    question: "What is the syntax for a Javascript function?",
+    answers: [
+      "var function functionName() {}",
+      "function functionName() {}",
+      "functionName function() {}",
+      "{function, functionName()}",
+    ],
+    correctAnswer: "function functionName() {}",
+  },
+];
 
-    });
-  //assigns a new variable to the h2 id of the questions div
-  var questionTitle = document.getElementById("question-title");
+//Creating variables
+var countEl = document.querySelector("#time"); //link to the time ID in html
+var startButton = document.getElementById("start"); //link to the start button
+var startScreen = document.getElementById("start-screen"); //link to the first screen
+var showElement = document.getElementById("questions"); //link to the questions div
+var questionTitle = document.getElementById("question-title"); //link ro the title of the question
+var choice = document.getElementById("choices"); //link to the choices div.
 
-  //assigns a new variable to the id choices child div of parent div questions
-  var choice = document.getElementById("choices");
+var currentQuestion = 0; //variable to keep track of what question we are on
+var secondsLeft = 30; //variable to start timer at 30 seconds.
+var timerInterval; //variable to assign timer to
+var score = 0; //variable to keep track of user's score
+
+
+//Code to start game.
+
+//1. User pressed the start quiz button
+//2. 30 second timer counts down
+//3. First page is hidden
+//4.Question and answer options appear
+//5. Need to check their answer 
+    //if its correct, add a point to score variable
+        //move to the next question
+        //reset the timer.
+
+
+
+
+startGame();
+//hide startscreen and show question screen then run updateCounter()
+//
+function startGame() {
+  // when start button clicked run function
+  startButton.addEventListener("click", function () {
+    startScreen.style.display = "none"; //hides startscrren
+    showElement.style.display = "block"; //shows showElement which is linked to html questions div.
+    updateCounter(); //starts the timer countdown from 30 to 0.
+  });
+
 
   //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
   questionTitle.textContent = questionsArr[currentQuestion].question;
 
   choice.textContent = "";
 
-
   // for loop to iterate through the array
   for (var i = 0; i < questionsArr[currentQuestion].answers.length; i++) {
-
     //create buttons
-    var button = document.createElement('button');
+    var button = document.createElement("button");
 
     //add questions in array to the button and make it show on the page using textContent.
     button.textContent = questionsArr[currentQuestion].answers[i];
@@ -136,34 +124,52 @@ function displayQuestion() {
 
     choice.appendChild(button);
   }
-
 }
 
-displayQuestion();
-function checkAnswer(event){
-    var selectedAnswer = event.target.textContent;
-    if(selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
-        score++;
-    } else {
-        secondsLeft -= 10;
-    }
-    currentQuestion++;
-    if(currentQuestion < questionsArr.length) {
-        displayQuestion();
-    } else {
-        endQuiz();
-    }
+//Update counter on page
+function updateCounter() {
+  timerInterval = setInterval(function () {
+    secondsLeft--;
+    countEl.textContent = secondsLeft;
 
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+      endQuiz();
+    }
+  }, 1000);
+  //seconds left needs to count down from 30
+}
+
+function endQuiz() {
+  var initials = prompt("Game finished, please enter your initials:"); //change this to the second page
+  if (initials != null) {
+    //do something here
+  }
+}
+
+
+
+function checkAnswer(event) {
+  var selectedAnswer = event.target.textContent;
+  if (selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
+    score++;
+  } else {
+    secondsLeft - 10;
+  }
+  currentQuestion++;
+  if (currentQuestion < questionsArr.length) {
+    startGame();
+  } else {
+    endQuiz();
+  }
 }
 /////////////BUTTONS////////////////
 //need to create 4 buttons
 //the buttons need to link to each individual answer
 //the buttons need to display in a column
 //there needs to be something checking if the right answer has been chosen
-    //else display the message 'Wrong!'
-    //then deduct 15 seconds from the timer. 
-
-
+//else display the message 'Wrong!'
+//then deduct 15 seconds from the timer.
 
 // A start button that when clicked a timer starts and the first question appears.
 var startButton = document.getElementById("start");
