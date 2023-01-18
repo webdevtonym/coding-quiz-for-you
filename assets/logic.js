@@ -91,10 +91,8 @@ var score = 0; //variable to keep track of user's score
         //move to the next question
         //reset the timer.
 
+startGame(); //calling start game function to begin the quiz.
 
-
-
-startGame();
 //hide startscreen and show question screen then run updateCounter()
 //
 function startGame() {
@@ -108,21 +106,49 @@ function startGame() {
 
   //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
   questionTitle.textContent = questionsArr[currentQuestion].question;
-
+  //
   choice.textContent = "";
 
   // for loop to iterate through the array
   for (var i = 0; i < questionsArr[currentQuestion].answers.length; i++) {
-    //create buttons
+    console.log("testing loop");
+    //creating a button
     var button = document.createElement("button");
 
-    //add questions in array to the button and make it show on the page using textContent.
+    //add the question in the array to the button created above
+    //and make it show on the page using textContent.
     button.textContent = questionsArr[currentQuestion].answers[i];
+
+    //assigns the choice answers to the button created and displays it on the page.
+    choice.appendChild(button);
 
     //add event listener to do something once the buttons are clicked
     button.addEventListener("click", checkAnswer);
 
-    choice.appendChild(button);
+  }
+}
+
+//function to check if the user's answer is correct.
+function checkAnswer(event) {
+ console.log("check answer");
+
+  var selectedAnswer = event.target.textContent;
+  var scoreEl = document.getElementById("final-score");
+  if (selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
+    scoreEl.textContent = "Correct!";
+    scoreEl.style.color = "green";
+    score++;
+  } else {
+    scoreEl.textContent = "Wrong!";
+    scoreEl.style.color = "red";
+    secondsLeft - 10;
+
+  }
+  currentQuestion++;
+  if (currentQuestion < questionsArr.length) {
+    startGame();
+  } else {
+    endQuiz();
   }
 }
 
@@ -142,27 +168,20 @@ function updateCounter() {
 
 function endQuiz() {
   var initials = prompt("Game finished, please enter your initials:"); //change this to the second page
-  if (initials != null) {
+  if (initials === null) {
     //do something here
+    alert("You entered an invalid entry, please try again");
+  } else {
+    alert(initials);
+    window.location.href = "highscores.html";
+
   }
+
 }
 
 
 
-function checkAnswer(event) {
-  var selectedAnswer = event.target.textContent;
-  if (selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
-    score++;
-  } else {
-    secondsLeft - 10;
-  }
-  currentQuestion++;
-  if (currentQuestion < questionsArr.length) {
-    startGame();
-  } else {
-    endQuiz();
-  }
-}
+
 /////////////BUTTONS////////////////
 //need to create 4 buttons
 //the buttons need to link to each individual answer
