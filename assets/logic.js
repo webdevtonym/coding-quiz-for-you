@@ -74,7 +74,7 @@ var score = 0;
 
 //4. When they click the clear highscores it should clear all the current data.
 
-// Create a code quiz that contains the following requirements:
+// Create a code quiz tha at contains the following requirements:
 
 //Update counter on page
 function updateCounter() {
@@ -100,9 +100,10 @@ function endQuiz() {
 
 function displayQuestion() {
 
-    startScreen.style.display = "block";
-    showElement.style.display = "none";
-    startButton.addEventListener("click", function() {
+    startScreen.style.display = "block"; //show startscreen
+    showElement.style.display = "none"; // hide startscreen
+    startButton.addEventListener("click", function() { // when start button clicked run function
+        console.log("button works");
         startScreen.style.display = "none";
         showElement.style.display = "block";
         updateCounter();
@@ -134,12 +135,11 @@ function displayQuestion() {
     button.addEventListener("click", checkAnswer);
 
     choice.appendChild(button);
-
-    
   }
 
 }
 
+displayQuestion();
 function checkAnswer(event){
     var selectedAnswer = event.target.textContent;
     if(selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
@@ -168,21 +168,21 @@ function checkAnswer(event){
 // A start button that when clicked a timer starts and the first question appears.
 var startButton = document.getElementById("start");
 
-function startQuiz() {
-  console.log("startQuiz function is running");
-  startButton.addEventListener("click", function () {
-    updateCounter();
-    console.log("button is working");
-    startScreen.remove(); //works
-    // Questions to display
-    if ((showElement.style.display = "none")) {
-      showElement.style.display = "block";
-    }
-  });
-  displayQuestion();
-}
+// function startQuiz() {
+//   console.log("startQuiz function is running");
+//   startButton.addEventListener("click", function () {
+//     updateCounter();
+//     console.log("button is working");
+//     startScreen.remove(); //works
+//     // Questions to display
+//     if ((showElement.style.display = "none")) {
+//       showElement.style.display = "block";
+//     }
+//   });
+//   displayQuestion();
+// }
 
-startQuiz();
+// startQuiz();
 
 // Questions contain buttons for each answer.
 // When answer is clicked, the next question appears
