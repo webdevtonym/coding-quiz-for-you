@@ -131,16 +131,17 @@ function startGame() {
 //function to check if the user's answer is correct.
 function checkAnswer(event) {
  console.log("check answer");
-
+  var displayCorrectOrWrong = document.getElementById("correctOrWrong");
+  displayCorrectOrWrong.textContent;
   var selectedAnswer = event.target.textContent;
-  var scoreEl = document.getElementById("final-score");
+  // var scoreEl = document.getElementById("final-score");
   if (selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
-    scoreEl.textContent = "Correct!";
-    scoreEl.style.color = "green";
+    displayCorrectOrWrong.textContent = "Correct!";
+    displayCorrectOrWrong.style.color = "green";
     score++;
   } else {
-    scoreEl.textContent = "Wrong!";
-    scoreEl.style.color = "red";
+    displayCorrectOrWrong.textContent = "Wrong!";
+   displayCorrectOrWrong.style.color = "red";
     secondsLeft - 10;
 
   }
