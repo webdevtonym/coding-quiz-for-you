@@ -32,8 +32,6 @@
 
 //4. When they click the clear highscores it should clear all the current data.
 
-
-
 var questionsArr = [
   {
     question:
@@ -73,12 +71,16 @@ var startScreen = document.getElementById("start-screen"); //link to the first s
 var showElement = document.getElementById("questions"); //link to the questions div
 var questionTitle = document.getElementById("question-title"); //link ro the title of the question
 var choice = document.getElementById("choices"); //link to the choices div.
+var finalScore = document.getElementById("final-score");
+var showLastScreen = document.getElementById("end-screen");
+var initialsInput = document.getElementById("initials");
 
 var currentQuestion = 0; //variable to keep track of what question we are on
 var secondsLeft = 30; //variable to start timer at 30 seconds.
 var timerInterval; //variable to assign timer to
 var score = 0; //variable to keep track of user's score
-
+var scoreArr = []; //to hold the data of the initials and score
+var userInitals = initialsInput.value; //assigns initials user inputs to a variable.
 
 //Code to start game.
 
@@ -86,10 +88,10 @@ var score = 0; //variable to keep track of user's score
 //2. 30 second timer counts down
 //3. First page is hidden
 //4.Question and answer options appear
-//5. Need to check their answer 
-    //if its correct, add a point to score variable
-        //move to the next question
-        //reset the timer.
+//5. Need to check their answer
+//if its correct, add a point to score variable
+//move to the next question
+//reset the timer.
 
 startGame(); //calling start game function to begin the quiz.
 
@@ -103,11 +105,12 @@ function startGame() {
     updateCounter(); //starts the timer countdown from 30 to 0.
   });
 
-
   //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
   questionTitle.textContent = questionsArr[currentQuestion].question;
   //
   choice.textContent = "";
+
+  // displayCorrectOrWrong.textContent = "";
 
   // for loop to iterate through the array
   for (var i = 0; i < questionsArr[currentQuestion].answers.length; i++) {
@@ -124,13 +127,12 @@ function startGame() {
 
     //add event listener to do something once the buttons are clicked
     button.addEventListener("click", checkAnswer);
-
   }
 }
 
 //function to check if the user's answer is correct.
 function checkAnswer(event) {
- console.log("check answer");
+  console.log("check answer");
   var displayCorrectOrWrong = document.getElementById("correctOrWrong");
   displayCorrectOrWrong.textContent;
   var selectedAnswer = event.target.textContent;
@@ -138,12 +140,12 @@ function checkAnswer(event) {
   if (selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
     displayCorrectOrWrong.textContent = "Correct!";
     displayCorrectOrWrong.style.color = "green";
+
     score++;
   } else {
     displayCorrectOrWrong.textContent = "Wrong!";
-   displayCorrectOrWrong.style.color = "red";
+    displayCorrectOrWrong.style.color = "red";
     secondsLeft - 10;
-
   }
   currentQuestion++;
   if (currentQuestion < questionsArr.length) {
@@ -151,6 +153,15 @@ function checkAnswer(event) {
   } else {
     endQuiz();
   }
+}
+
+function trackScore(scoreArr) {
+  //take their input
+  scoreArr.push(score, initials);
+  console.log("This is the output of the array" + scoreArr);
+  //
+  // put it into the empty array (scoreArr)
+  //display the array to the screen into the 'final-score'
 }
 
 //Update counter on page
@@ -168,20 +179,18 @@ function updateCounter() {
 }
 
 function endQuiz() {
-  var initials = prompt("Game finished, please enter your initials:"); //change this to the second page
-  if (initials === null) {
+  // var initials = prompt("Game finished, please enter your initials:"); //change this to the second page
+  if (initials === null || initials.length > 3) {
     //do something here
     alert("You entered an invalid entry, please try again");
   } else {
-    alert(initials);
-    window.location.href = "highscores.html";
-
+    showElement.style.display = "none"; //hides the questions
+    showLastScreen.style.display = "block"; //shows the last screen.
+    // alert(initials);
+    // window.location.href = "highscores.html";
+    trackScore(initials);
   }
-
 }
-
-
-
 
 /////////////BUTTONS////////////////
 //need to create 4 buttons
@@ -190,25 +199,6 @@ function endQuiz() {
 //there needs to be something checking if the right answer has been chosen
 //else display the message 'Wrong!'
 //then deduct 15 seconds from the timer.
-
-// A start button that when clicked a timer starts and the first question appears.
-var startButton = document.getElementById("start");
-
-// function startQuiz() {
-//   console.log("startQuiz function is running");
-//   startButton.addEventListener("click", function () {
-//     updateCounter();
-//     console.log("button is working");
-//     startScreen.remove(); //works
-//     // Questions to display
-//     if ((showElement.style.display = "none")) {
-//       showElement.style.display = "block";
-//     }
-//   });
-//   displayQuestion();
-// }
-
-// startQuiz();
 
 // Questions contain buttons for each answer.
 // When answer is clicked, the next question appears
