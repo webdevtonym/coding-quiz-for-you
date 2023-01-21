@@ -155,10 +155,11 @@ function checkAnswer(event) {
   }
 }
 
-function trackScore(scoreArr) {
+function trackScore(score, initials) {
   //take their input
-  scoreArr.push(score, initials);
-  console.log("This is the output of the array" + scoreArr);
+ 
+  scoreArr.push({score: score, initials: initials});
+  console.log("This is the output of t he array" + scoreArr);
   //
   // put it into the empty array (scoreArr)
   //display the array to the screen into the 'final-score'
@@ -186,9 +187,8 @@ function endQuiz() {
   } else {
     showElement.style.display = "none"; //hides the questions
     showLastScreen.style.display = "block"; //shows the last screen.
-    // alert(initials);
-    // window.location.href = "highscores.html";
     trackScore(initials);
+    // window.location.href = "highscores.html";
   }
 }
 
