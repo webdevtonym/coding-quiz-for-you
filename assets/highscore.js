@@ -7,15 +7,6 @@ function displayUserScore(userScores) {
    }
 }
 
-function displayUserInitials(userInitials){
-
-
-}
-
-
-
-
-
 function init(){
     var getLocalStorageScore = localStorage.getItem('scores');
     if(getLocalStorageScore == null){
