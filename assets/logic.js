@@ -220,10 +220,7 @@ document.getElementById('submit').addEventListener('click', function() {
 
 });
 
-//should remove localstorage initials and score when button clicked
-document.getElementById('clear').addEventListener('click', function(){
-  localStorage.removeItem("scores");
-});
+
 
 /////////////BUTTONS////////////////
 //need to create 4 buttons
