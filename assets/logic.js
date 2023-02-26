@@ -95,8 +95,6 @@ var scoreArr = []; //to hold the data of the initials and score
 
 //hide startscreen and show question screen then run updateCounter()
 function startGame() {
-  
-
   //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
   questionTitle.textContent = questionsArr[currentQuestion].question;
   //
@@ -123,12 +121,12 @@ function startGame() {
 }
 
 // when start button clicked run function
-  startButton.addEventListener("click", function () {
-    startScreen.style.display = "none"; //hides startscrren
-    showElement.style.display = "block"; //shows showElement which is linked to html questions div.
-    startGame(); //calling start game function to begin the quiz.
-    updateCounter(); //starts the timer countdown from 30 to 0.
-  });
+startButton.addEventListener("click", function () {
+  startScreen.style.display = "none"; //hides startscrren
+  showElement.style.display = "block"; //shows showElement which is linked to html questions div.
+  startGame(); //calling start game function to begin the quiz.
+  updateCounter(); //starts the timer countdown from 30 to 0.
+});
 
 //function to check if the user's answer is correct.
 function checkAnswer(event) {
@@ -136,7 +134,6 @@ function checkAnswer(event) {
   var displayCorrectOrWrong = document.getElementById("correctOrWrong");
   displayCorrectOrWrong.textContent;
   var selectedAnswer = event.target.textContent;
-  // var scoreEl = document.getElementById("final-score");
   if (selectedAnswer === questionsArr[currentQuestion].correctAnswer) {
     displayCorrectOrWrong.textContent = "Correct!";
     displayCorrectOrWrong.style.color = "green";
@@ -145,7 +142,7 @@ function checkAnswer(event) {
   } else {
     displayCorrectOrWrong.textContent = "Wrong!";
     displayCorrectOrWrong.style.color = "red";
-    secondsLeft -= 10;
+    secondsLeft -= 7;
   }
   currentQuestion++;
   if (currentQuestion < questionsArr.length) {
@@ -156,13 +153,8 @@ function checkAnswer(event) {
 }
 
 function trackScore() {
-  // document.getElementById("final-score").textContent = score;
-  // const checkStorage = localStorage.getItem("initial",)
-  // scoreArr.push({score: score, initials: initials});
-  // console.log("This is the output of the array" + JSON.stringify(scoreArr));
   var userInitials = initialsInput.value; //assigns initials user inputs to a variable.
   if (userInitials === null || userInitials.length > 3) {
-    //do something here
     alert("You entered an invalid entry, please try again");
     return;
   }
@@ -196,8 +188,7 @@ function updateCounter() {
       clearInterval(timerInterval);
       endQuiz();
     } else {
-    countEl.textContent = secondsLeft;
-
+      countEl.textContent = secondsLeft;
     }
   }, 1000);
   //seconds left needs to count down from 30
@@ -205,35 +196,14 @@ function updateCounter() {
 
 function endQuiz() {
   // var initials = prompt("Game finished, please enter your initials:"); //change this to the second page
-  
-    showElement.style.display = "none"; //hides the questions
-    showLastScreen.style.display = "block"; //shows the last screen.
-    document.getElementById("final-score").textContent = score;
-    // document.getElementById("highscores").textContent = userInitials;
-  }
 
+  showElement.style.display = "none"; //hides the questions
+  showLastScreen.style.display = "block"; //shows the last screen.
+  document.getElementById("final-score").textContent = score;
+  // document.getElementById("highscores").textContent = userInitials;
+}
 
-//should change  
-document.getElementById('submit').addEventListener('click', function() {
+document.getElementById("submit").addEventListener("click", function () {
   trackScore();
   navigateToPage();
-
 });
-
-
-
-/////////////BUTTONS////////////////
-//need to create 4 buttons
-//the buttons need to link to each individual answer
-//the buttons need to display in a column
-//there needs to be something checking if the right answer has been chosen
-//else display the message 'Wrong!'
-//then deduct 15 seconds from the timer.
-
-// Questions contain buttons for each answer.
-// When answer is clicked, the next question appears
-// If the answer clicked was incorrect then subtract time from the clock
-
-// The quiz should end when all questions are answered or the timer reaches 0.
-
-// When the game ends, it should display their score and give the user the ability to save their initials and their score

@@ -10,7 +10,7 @@ a {
 }
 
 /* prevents the list of scores being numbered */
-ol li{
+ol li {
   list-style: none;
 }
 
