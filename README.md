@@ -17,7 +17,7 @@ If you click the clear highscores button it will clear local storage, which will
 
 ![coding-quiz-for-you](/assets/images/coding-quiz-ss.png)
 
-Link to application: <https://webdevtonym.github.io/getWeatherNow/>
+Link to application: <https://webdevtonym.github.io/coding-quiz-for-you/>
 
 ## License
 
