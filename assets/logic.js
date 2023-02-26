@@ -80,11 +80,9 @@ var secondsLeft = 30; //variable to start timer at 30 seconds.
 var timerInterval; //variable to assign timer to
 var score = 0; //variable to keep track of user's score
 var scoreArr = []; //to hold the data of the initials and score
-var userInitals = initialsInput.value; //assigns initials user inputs to a variable.
 
 //Code to start game.
-
-//1. User pressed the start quiz button
+//1. User presses the start quiz button
 //2. 30 second timer counts down
 //3. First page is hidden
 //4.Question and answer options appear
@@ -93,17 +91,11 @@ var userInitals = initialsInput.value; //assigns initials user inputs to a varia
 //move to the next question
 //reset the timer.
 
-startGame(); //calling start game function to begin the quiz.
+//---------------Game Start--------------//
 
 //hide startscreen and show question screen then run updateCounter()
-//
 function startGame() {
-  // when start button clicked run function
-  startButton.addEventListener("click", function () {
-    startScreen.style.display = "none"; //hides startscrren
-    showElement.style.display = "block"; //shows showElement which is linked to html questions div.
-    updateCounter(); //starts the timer countdown from 30 to 0.
-  });
+  
 
   //takes the first variable created (so that we can target the html text content and manipulate it) then makes it equal to 1st element of the questions array and points to the question item in the object.
   questionTitle.textContent = questionsArr[currentQuestion].question;
@@ -130,9 +122,17 @@ function startGame() {
   }
 }
 
+// when start button clicked run function
+  startButton.addEventListener("click", function () {
+    startScreen.style.display = "none"; //hides startscrren
+    showElement.style.display = "block"; //shows showElement which is linked to html questions div.
+    startGame(); //calling start game function to begin the quiz.
+    updateCounter(); //starts the timer countdown from 30 to 0.
+  });
+
 //function to check if the user's answer is correct.
 function checkAnswer(event) {
-  console.log("check answer");
+  console.log("check answer function just ran");
   var displayCorrectOrWrong = document.getElementById("correctOrWrong");
   displayCorrectOrWrong.textContent;
   var selectedAnswer = event.target.textContent;
@@ -145,7 +145,7 @@ function checkAnswer(event) {
   } else {
     displayCorrectOrWrong.textContent = "Wrong!";
     displayCorrectOrWrong.style.color = "red";
-    secondsLeft - 10;
+    secondsLeft -= 10;
   }
   currentQuestion++;
   if (currentQuestion < questionsArr.length) {
@@ -155,25 +155,49 @@ function checkAnswer(event) {
   }
 }
 
-function trackScore(score, initials) {
-  //take their input
- 
-  scoreArr.push({score: score, initials: initials});
-  console.log("This is the output of t he array" + scoreArr);
-  //
+function trackScore() {
+  // document.getElementById("final-score").textContent = score;
+  // const checkStorage = localStorage.getItem("initial",)
+  // scoreArr.push({score: score, initials: initials});
+  // console.log("This is the output of the array" + JSON.stringify(scoreArr));
+  var userInitials = initialsInput.value; //assigns initials user inputs to a variable.
+  if (userInitials === null || userInitials.length > 3) {
+    //do something here
+    alert("You entered an invalid entry, please try again");
+    return;
+  }
+  let anotherUser = { score, userInitials }; //create a new array with the score and initials entered by the user
+  let existingScores = JSON.parse(localStorage.getItem("scores")); //
+
+  //if the existing score is equal to an empty string then
+  if (existingScores == null) {
+    existingScores = [anotherUser];
+  } else {
+    existingScores.push(anotherUser);
+  }
+  localStorage.setItem("scores", JSON.stringify(existingScores));
+
+  //where are the initials and score stored?
+  //score = score, initials = userInitials.
   // put it into the empty array (scoreArr)
   //display the array to the screen into the 'final-score'
+}
+
+function navigateToPage() {
+  window.location.href = "highscores.html";
 }
 
 //Update counter on page
 function updateCounter() {
   timerInterval = setInterval(function () {
     secondsLeft--;
-    countEl.textContent = secondsLeft;
 
-    if (secondsLeft === 0) {
+    if (secondsLeft < 0) {
       clearInterval(timerInterval);
       endQuiz();
+    } else {
+    countEl.textContent = secondsLeft;
+
     }
   }, 1000);
   //seconds left needs to count down from 30
@@ -181,16 +205,25 @@ function updateCounter() {
 
 function endQuiz() {
   // var initials = prompt("Game finished, please enter your initials:"); //change this to the second page
-  if (initials === null || initials.length > 3) {
-    //do something here
-    alert("You entered an invalid entry, please try again");
-  } else {
+  
     showElement.style.display = "none"; //hides the questions
     showLastScreen.style.display = "block"; //shows the last screen.
-    trackScore(initials);
-    // window.location.href = "highscores.html";
+    document.getElementById("final-score").textContent = score;
+    // document.getElementById("highscores").textContent = userInitials;
   }
-}
+
+
+//should change  
+document.getElementById('submit').addEventListener('click', function() {
+  trackScore();
+  navigateToPage();
+
+});
+
+//should remove localstorage initials and score when button clicked
+document.getElementById('clear').addEventListener('click', function(){
+  localStorage.removeItem("scores");
+});
 
 /////////////BUTTONS////////////////
 //need to create 4 buttons
