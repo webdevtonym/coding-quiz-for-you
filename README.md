@@ -19,6 +19,12 @@ If you click the clear highscores button it will clear local storage, which will
 
 Link to application: <https://webdevtonym.github.io/coding-quiz-for-you/>
 
+## CI/CD Pipeline
+This project includes a GitHub Actions workflow to automate the build, test, and deployment of the coding quiz app.
+- Builds and tests the app using Node.js on every push to the `main` branch.
+- Deploys the app to a local Ubuntu server via SSH, simulating cloud infrastructure for DevOps practice.
+- Configuration: See `.github/workflows/ci-cd.yml`.
+
 ## License
 
 MIT License
