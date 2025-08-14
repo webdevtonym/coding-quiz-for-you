@@ -24,9 +24,11 @@ jobs:
       - name: Deploy to Server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_HOST: 6.tcp.eu.ngrok.io
           SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: 15070
         run: |
           echo "$SSH_PRIVATE_KEY" > key
           chmod 600 key
-          scp -i key -r ./* $SSH_USER@$SSH_HOST:/var/www/html
+          ssh -i key -p $SSH_PORT $SSH_USER@$SSH_HOST
+          scp -i key -P $SSH_PORT -r ./* $SSH_USER@$SSH_HOST:/var/www/html
