@@ -25,6 +25,13 @@ This project includes a GitHub Actions workflow to automate the build, test, and
 - Deploys the app to a local Ubuntu server via SSH, simulating cloud infrastructure for DevOps practice.
 - Configuration: See `.github/workflows/ci-cd.yml`.
 
+## Dockerized Deployment
+This project is containerized using Docker to run the quiz app in an Nginx container.
+- Built a Docker image (`coding-quiz`) using `Dockerfile`.
+- Runs on a local Ubuntu VM, accessible at `http://<VM_IP>:8080`.
+- Demonstrates containerization for DevOps workflows.
+Setup: `docker build -t coding-quiz . && docker run -d -p 8080:80 --name quiz-app coding-quiz`.
+
 ## License
 
 MIT License
