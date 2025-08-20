@@ -32,6 +32,13 @@ This project is containerized using Docker to run the quiz app in an Nginx conta
 - Demonstrates containerization for DevOps workflows.
 Setup: `docker build -t coding-quiz . && docker run -d -p 8080:80 --name quiz-app coding-quiz`.
 
+## Terraform Infrastructure
+This project uses Terraform to deploy the quiz app on an AWS EC2 instance.
+- Deploys a `t4g.micro` instance with Amazon Linux 2023 in `us-east-1`.
+- Runs an ARM-compatible Docker container from [hub.docker.com/r/yourusername/coding-quiz:arm64](https://hub.docker.com/r/yourusername/coding-quiz).
+- Accessible at `http://<EC2_IP>` (replace with EC2 public IP).
+- Setup: See `terraform-project/main.tf` for EC2 configuration.
+
 ## License
 
 MIT License
