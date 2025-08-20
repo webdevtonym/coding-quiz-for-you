@@ -35,7 +35,7 @@ Setup: `docker build -t coding-quiz . && docker run -d -p 8080:80 --name quiz-ap
 ## Terraform Infrastructure
 This project uses Terraform to deploy the quiz app on an AWS EC2 instance.
 - Deploys a `t4g.micro` instance with Amazon Linux 2023 in `us-east-1`.
-- Runs an ARM-compatible Docker container from [hub.docker.com/r/yourusername/coding-quiz:arm64](https://hub.docker.com/r/yourusername/coding-quiz).
+- Runs an ARM-compatible Docker container from [hub.docker.com/r/dockermantm/coding-quiz:arm64](https://hub.docker.com/r/dockermantm/coding-quiz).
 - Accessible at `http://<EC2_IP>` (replace with EC2 public IP).
 - Setup: See `terraform-project/main.tf` for EC2 configuration.
 
