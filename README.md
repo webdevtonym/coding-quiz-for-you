@@ -39,6 +39,12 @@ This project uses Terraform to deploy the quiz app on an AWS EC2 instance.
 - Accessible at `http://<EC2_IP>` (replace with EC2 public IP).
 - Setup: See `terraform-project/main.tf` for EC2 configuration.
 
+## Ansible Automation
+This project uses Ansible to automate deployment on a VirtualBox VM.
+- Deploys `dockermantm/coding-quiz:latest` container on Ubuntu VM.
+- Accessible at `http://192.168.68.123:8080`.
+- Setup: See `/home/urbyv/ansible-quiz/deploy-quiz.yml` in WSL.
+
 ## License
 
 MIT License
